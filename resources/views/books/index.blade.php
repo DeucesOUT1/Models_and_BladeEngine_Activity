@@ -2,6 +2,9 @@
 
 @section('content')
     <h1 class="text-2xl font-bold mb-4">Book List</h1>
+    @if(isset($query))
+        <p>Search results for: "{{ $query }}"</p>
+    @endif
     <table class="min-w-full bg-white">
         <thead class="bg-gray-800 text-white">
             <tr>
@@ -13,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($books as $book)
+            @forelse ($books as $book)
                 <tr>
                     <td class="border px-4 py-2">{{ $book->isbn }}</td>
                     <td class="border px-4 py-2">{{ $book->title }}</td>
@@ -21,7 +24,11 @@
                     <td class="border px-4 py-2">{{ $book->description }}</td>
                     <td class="border px-4 py-2">{{ $book->date_published }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="5" class="border px-4 py-2 text-center">No books found</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 @endsection

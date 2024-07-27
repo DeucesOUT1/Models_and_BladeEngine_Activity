@@ -12,4 +12,13 @@ class BookController extends Controller
         $books = Book::all();
         return view('books.index', compact('books'));
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $books = Book::where('title', 'LIKE', "%{$query}%")
+                     ->orWhere('author', 'LIKE', "%{$query}%")
+                     ->get();
+        return view('books.index', compact('books', 'query'));
+    }
 }
